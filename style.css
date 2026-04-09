@@ -1392,3 +1392,34 @@ footer {
         --border-lit: #888888;
     }
 }
+
+.toast {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: #1e1e1e;
+    color: #e8e8e8;
+    padding: 12px 16px;
+    border-left: 4px solid #cc7832;
+    font-family: "Fira Code", monospace;
+    font-size: 14px;
+    box-shadow: 0 0 12px rgba(0,0,0,0.4);
+    border-radius: 6px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+    z-index: 99999;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.toast.success {
+    border-left-color: #6db33f;
+}
+
+.toast.error {
+    border-left-color: #e8820c;
+}

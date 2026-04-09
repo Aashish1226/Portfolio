@@ -16,19 +16,19 @@ document.getElementById('submitBtn').addEventListener('click', function () {
     if (!name) {
         nameEl.style.borderColor = '#e8820c';
         nameEl.focus();
-        alert('Please enter your name.');
+        showToast('Please enter your name.', 'error');
         return;
     }
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
         emailEl.style.borderColor = '#e8820c';
         emailEl.focus();
-        alert('Please enter a valid email address.');
+        showToast('Please enter a valid email address.');
         return;
     }
     if (msg.length < 10) {
         msgEl.style.borderColor = '#e8820c';
         msgEl.focus();
-        alert('Message must be at least 10 characters.');
+        showToast('Message must be at least 10 characters.', 'error');
         return;
     }
 
@@ -44,7 +44,7 @@ document.getElementById('submitBtn').addEventListener('click', function () {
             if (s) s.remove();
             btn.textContent = 'Execute Contact.run()';
             btn.disabled = false;
-            alert('⏱️ Request timed out. Please try again.');
+            showToast('⏱️ Request timed out. Please try again.');
         }
     }, 12000);
 
@@ -56,11 +56,11 @@ document.getElementById('submitBtn').addEventListener('click', function () {
         btn.textContent = 'Execute Contact.run()';
         btn.disabled = false;
         if (res && res.status === 'success') {
-            alert('Message sent successfully!');
+            showToast('Message sent successfully!', 'success');
             document.getElementById('contactForm').reset();
             [nameEl, emailEl, msgEl].forEach(el => el.style.borderColor = '');
         } else {
-            alert('Something went wrong. Please try again.');
+            showToast('Something went wrong. Please try again.', 'error');
         }
     };
 
@@ -73,7 +73,7 @@ document.getElementById('submitBtn').addEventListener('click', function () {
         delete window[cbName];
         btn.textContent = 'Execute Contact.run()';
         btn.disabled = false;
-        alert('Could not reach server. Please email: aashishsaini1226@gmail.com');
+        showToast('Could not reach server. Please email: aashishsaini1226@gmail.com');
     };
     document.head.appendChild(script);
 });
@@ -255,3 +255,14 @@ const styleEl = document.createElement('style');
 styleEl.textContent = '@keyframes cursor-blink{0%,100%{opacity:1;}50%{opacity:0;}}';
 document.head.appendChild(styleEl);
 roleEl.appendChild(cursor);
+
+function showToast(message, type = 'error') {
+    const toast = document.getElementById('toast');
+    toast.textContent = `[${type.toUpperCase()}] ${message}`;
+
+    toast.className = `toast show ${type}`;
+
+    setTimeout(() => {
+        toast.classList.remove('show');
+    }, 3000);
+}
